@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { Wrapper, Categories, Header, Sort, PizzaList } from './components';
 
-function App() {
+import './scss/app.scss';
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Wrapper>
+      <Header />
+      <main className="content">
+        <div className="container">
+          <div className="content__top">
+            <Categories />
+            <Sort />
+          </div>
+          <h2 className="content__title">Усі піци</h2>
+          <PizzaList />
+        </div>
+      </main>
+    </Wrapper>
   );
-}
+};
 
 export default App;
