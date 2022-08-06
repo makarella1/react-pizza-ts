@@ -1,4 +1,6 @@
-import { Wrapper, Categories, Header, Sort, PizzaList } from './components';
+import { Routes, Route } from 'react-router-dom';
+import { Wrapper, Header } from './components';
+import { Home, Cart, NotFound, Pizza } from './pages';
 
 import './scss/app.scss';
 
@@ -6,16 +8,12 @@ const App = () => {
   return (
     <Wrapper>
       <Header />
-      <main className="content">
-        <div className="container">
-          <div className="content__top">
-            <Categories />
-            <Sort />
-          </div>
-          <h2 className="content__title">Усі піци</h2>
-          <PizzaList />
-        </div>
-      </main>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/pizzas/:id" element={<Pizza />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </Wrapper>
   );
 };

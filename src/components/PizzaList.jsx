@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { PizzaItem } from './index';
+import { PizzaItem, Skeleton } from './index';
 
 const PizzaList = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [pizzaData, setPizzaData] = useState([]);
 
   useEffect(() => {
@@ -17,6 +18,7 @@ const PizzaList = () => {
 
       const data = await res.json();
       setPizzaData(data);
+      setIsLoading(false);
     };
 
     fetchData();
@@ -24,9 +26,10 @@ const PizzaList = () => {
 
   return (
     <div className="content__items">
-      {pizzaData.map((pizza) => (
-        <PizzaItem {...pizza} key={pizza.id} />
-      ))}
+      {isLoading && [...Array(10)].map((_, index) => <Skeleton key={index} />)}
+      {!isLoading &&
+        pizzaData.length > 0 &&
+        pizzaData.map((pizza) => <PizzaItem {...pizza} key={pizza.id} />)}
     </div>
   );
 };
