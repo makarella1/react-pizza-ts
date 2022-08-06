@@ -1,4 +1,24 @@
+import { useState, useCallback, useRef } from 'react';
+import { useClickOutside } from '../hooks/useClickOutside';
+
+import { OPTIONS_DATA } from '../utils/utilityData';
+
 const Sort = () => {
+  const [isPopupOpened, setIsPopupOpened] = useState(false);
+  const [activeOption, setActiveOption] = useState(0);
+  const popupRef = useRef(null);
+
+  const selectedOptionName = OPTIONS_DATA[activeOption].name;
+
+  const closePopup = useCallback(() => setIsPopupOpened(false), []);
+
+  const optionClickHandler = (index) => {
+    setActiveOption(index);
+    setIsPopupOpened(false);
+  };
+
+  useClickOutside(popupRef, closePopup);
+
   return (
     <div className="sort">
       <div className="sort__label">
@@ -15,15 +35,23 @@ const Sort = () => {
           />
         </svg>
         <b>Сортувати за:</b>
-        <span>популярністю</span>
+        <span onClick={() => setIsPopupOpened(true)}>{selectedOptionName}</span>
       </div>
-      <div className="sort__popup">
-        <ul>
-          <li className="active">популярністю</li>
-          <li>ціною</li>
-          <li>алфавітом</li>
-        </ul>
-      </div>
+      {isPopupOpened && (
+        <div className="sort__popup" ref={popupRef}>
+          <ul>
+            {OPTIONS_DATA.map((option, index) => (
+              <li
+                className={`${activeOption === index ? 'active' : ''}`}
+                onClick={optionClickHandler.bind(null, index)}
+                key={index}
+              >
+                {option.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

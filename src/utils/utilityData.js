@@ -18,3 +18,15 @@ export const CATEGORIES_DATA = [
     name: 'Закриті',
   },
 ];
+
+export const OPTIONS_DATA = [
+  {
+    name: 'популярністю',
+  },
+  {
+    name: 'ціною',
+  },
+  {
+    name: 'алфавітом',
+  },
+];
