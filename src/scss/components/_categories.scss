@@ -4,11 +4,6 @@
   ul {
     display: flex;
 
-    @media (max-width: 1200px) {
-      flex-direction: column;
-      margin-bottom: 30px;
-    }
-
     li {
       background-color: #f9f9f9;
       padding: 13px 30px;
@@ -39,6 +34,8 @@
   }
 
   @media (max-width: 1200px) {
+    overflow-x: scroll;
+    margin-bottom: 20px;
     width: 100%;
   }
 }

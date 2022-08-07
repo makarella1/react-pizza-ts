@@ -1,23 +1,23 @@
 import ContentLoader from 'react-content-loader';
 
-const MyLoader = () => {
+const Skeleton = () => {
   return (
     <ContentLoader
-      className="pizza-block"
       speed={2}
-      width={406}
+      width={280}
       height={466}
-      viewBox="0 0 406 466"
+      viewBox="0 0 280 466"
       backgroundColor="#f4ecec"
       foregroundColor="#f1e9e9"
+      style={{ margin: '0 auto' }}
     >
-      <circle cx="206" cy="143" r="132" />
-      <rect x="57" y="285" rx="17" ry="17" width="296" height="15" />
-      <rect x="0" y="315" rx="10" ry="10" width="406" height="88" />
-      <rect x="2" y="434" rx="10" ry="10" width="91" height="27" />
-      <rect x="267" y="416" rx="10" ry="10" width="135" height="45" />
+      <circle cx="142" cy="132" r="132" />
+      <rect x="0" y="315" rx="10" ry="10" width="280" height="88" />
+      <rect x="3" y="426" rx="10" ry="10" width="91" height="27" />
+      <rect x="144" y="415" rx="10" ry="10" width="135" height="45" />
+      <rect x="0" y="275" rx="19" ry="19" width="280" height="23" />
     </ContentLoader>
   );
 };
 
-export default MyLoader;
+export default Skeleton;

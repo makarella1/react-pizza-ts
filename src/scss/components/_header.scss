@@ -8,6 +8,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media (max-width: 648px) {
+      flex-direction: column;
+    }
   }
 
   &__logo {
@@ -27,10 +31,14 @@
 
     p {
       color: #7b7b7b;
-
-      @media (max-width: 648px) {
-        display: none;
-      }
     }
+
+    @media (max-width: 648px) {
+      margin-bottom: 20px;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    padding-bottom: 0px;
   }
 }

@@ -1,21 +1,30 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useContext, useEffect } from 'react';
 import { useClickOutside } from '../hooks/useClickOutside';
 
 import { OPTIONS_DATA } from '../utils/utilityData';
 
+import { SearchContext } from '../context/SearchContextProvider';
+
 const Sort = () => {
   const [isPopupOpened, setIsPopupOpened] = useState(false);
-  const [activeOption, setActiveOption] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+
   const popupRef = useRef(null);
 
-  const selectedOptionName = OPTIONS_DATA[activeOption].name;
+  const { setSortTerm } = useContext(SearchContext);
+
+  const selectedOptionName = OPTIONS_DATA[activeIndex].name;
 
   const closePopup = useCallback(() => setIsPopupOpened(false), []);
 
   const optionClickHandler = (index) => {
-    setActiveOption(index);
+    setActiveIndex(index);
     setIsPopupOpened(false);
   };
+
+  useEffect(() => {
+    setSortTerm(OPTIONS_DATA[activeIndex].sort);
+  }, [activeIndex, setSortTerm]);
 
   useClickOutside(popupRef, closePopup);
 
@@ -42,7 +51,7 @@ const Sort = () => {
           <ul>
             {OPTIONS_DATA.map((option, index) => (
               <li
-                className={`${activeOption === index ? 'active' : ''}`}
+                className={`${activeIndex === index ? 'active' : ''}`}
                 onClick={optionClickHandler.bind(null, index)}
                 key={index}
               >

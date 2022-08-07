@@ -4,9 +4,13 @@ import App from './App';
 
 import { BrowserRouter } from 'react-router-dom';
 
+import { SearchContextProvider } from './context/SearchContextProvider';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <SearchContextProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </SearchContextProvider>
 );

@@ -1,17 +1,19 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 
 import { CATEGORIES_DATA } from '../utils/utilityData';
 
+import { SearchContext } from '../context/SearchContextProvider';
+
 const Categories = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const { searchCategory, setSearchCategory } = useContext(SearchContext);
 
   return (
     <div className="categories">
       <ul>
         {CATEGORIES_DATA.map((categorie, index) => (
           <li
-            className={`${activeIndex === index ? 'active' : ''}`}
-            onClick={() => setActiveIndex(index)}
+            className={`${searchCategory === index ? 'active' : ''}`}
+            onClick={() => setSearchCategory(index)}
             key={index}
           >
             {categorie.name}

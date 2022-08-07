@@ -1,6 +1,15 @@
+import { useEffect } from 'react';
+
 import { Categories, Sort, PizzaList } from '../components';
 
 const Home = () => {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
+
   return (
     <main className="content">
       <div className="container">
