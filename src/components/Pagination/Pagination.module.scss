@@ -1,0 +1,47 @@
+@import '../../scss/_variables';
+
+.pagination {
+  display: flex;
+  width: 200px;
+  justify-content: space-between;
+}
+
+.button {
+  display: inline-block;
+  background-color: #fff;
+  &,
+  span {
+    color: $orange;
+  }
+  border-radius: 30px;
+  padding: 10px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color $duration ease-in-out,
+    border-color $duration ease-in-out;
+  border: 1px solid $orange;
+  font-weight: 900;
+
+  &:hover {
+    background-color: $orange;
+
+    &,
+    span {
+      color: #fff;
+    }
+
+    svg {
+      path {
+        fill: #fff;
+      }
+    }
+  }
+}
+
+.buttonActive {
+  background-color: $orange;
+  &,
+  span {
+    color: #fff;
+  }
+}

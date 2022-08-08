@@ -3,14 +3,15 @@ import { useEffect, useState, useContext } from 'react';
 import { PizzaItem, Skeleton } from './index';
 import { SearchContext } from '../context/SearchContextProvider';
 
+const LIMIT = 4;
+
 const PizzaList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [pizzaData, setPizzaData] = useState([]);
 
-  const { searchCategory, sortBy } = useContext(SearchContext);
+  const { searchCategory, sortBy, searchTerm, currentPage, setTotalPages } =
+    useContext(SearchContext);
   const categoryId = searchCategory === 0 ? '' : searchCategory;
-
-  console.log(searchCategory);
 
   useEffect(() => {
     const order = sortBy.includes('-') ? 'asc' : 'desc';
@@ -19,7 +20,7 @@ const PizzaList = () => {
     const fetchData = async () => {
       setIsLoading(true);
       const res = await fetch(
-        `https://62ee5a4dc1ef25f3da874f12.mockapi.io/pizzas?category=${categoryId}&sortBy=${sortTerm}&order=${order}`
+        `https://62ee5a4dc1ef25f3da874f12.mockapi.io/pizzas?page=${currentPage}&limit=${LIMIT}&category=${categoryId}&sortBy=${sortTerm}&order=${order}$count`
       );
 
       if (!res.ok) {
@@ -27,18 +28,29 @@ const PizzaList = () => {
       }
 
       const data = await res.json();
-      setPizzaData(data);
+      setPizzaData(data.pizzas);
+      setTotalPages(Math.ceil(data.count / LIMIT));
       setIsLoading(false);
     };
 
     fetchData();
-  }, [categoryId, sortBy]);
+  }, [categoryId, sortBy, currentPage, setTotalPages]);
+
+  //I won't be searching through backend because mockAPI can't give me such an opportunity (it can technically but it doesn't work on practice)
+  const pizzas = pizzaData
+    .filter((pizza) =>
+      pizza.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .map((pizza) => <PizzaItem {...pizza} key={pizza.id} />);
+
+  const skeletons = [...Array(LIMIT)].map((_, index) => (
+    <Skeleton key={index} />
+  ));
 
   return (
     <div className="content__items">
-      {isLoading && [...Array(10)].map((_, index) => <Skeleton key={index} />)}
-      {!isLoading &&
-        pizzaData.map((pizza) => <PizzaItem {...pizza} key={pizza.id} />)}
+      {isLoading && skeletons}
+      {!isLoading && pizzas}
     </div>
   );
 };

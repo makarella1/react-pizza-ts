@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { Categories, Sort, PizzaList } from '../components';
+import { Categories, Sort, PizzaList, Pagination } from '../components';
 
 const Home = () => {
   useEffect(() => {
@@ -19,6 +19,7 @@ const Home = () => {
         </div>
         <h2 className="content__title">Усі піци</h2>
         <PizzaList />
+        <Pagination />
       </div>
     </main>
   );
