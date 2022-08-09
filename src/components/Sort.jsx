@@ -1,17 +1,18 @@
-import { useState, useCallback, useRef, useContext, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useClickOutside } from '../hooks/useClickOutside';
+import { useDispatch } from 'react-redux';
 
 import { OPTIONS_DATA } from '../utils/utilityData';
 
-import { SearchContext } from '../context/SearchContextProvider';
+import { sort } from '../redux/slices/filterSlice';
 
 const Sort = () => {
   const [isPopupOpened, setIsPopupOpened] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const popupRef = useRef(null);
+  const dispatch = useDispatch();
 
-  const { setSortTerm } = useContext(SearchContext);
+  const popupRef = useRef(null);
 
   const selectedOptionName = OPTIONS_DATA[activeIndex].name;
 
@@ -23,8 +24,8 @@ const Sort = () => {
   };
 
   useEffect(() => {
-    setSortTerm(OPTIONS_DATA[activeIndex].sort);
-  }, [activeIndex, setSortTerm]);
+    dispatch(sort(OPTIONS_DATA[activeIndex].sort));
+  }, [activeIndex, dispatch]);
 
   useClickOutside(popupRef, closePopup);
 

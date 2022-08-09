@@ -1,18 +1,18 @@
-import { useContext } from 'react';
-
-import { SearchContext } from '../../context/SearchContextProvider';
+import { useSelector, useDispatch } from 'react-redux';
+import { searchByTerm } from '../../redux/slices/filterSlice';
 
 import styles from './Search.module.scss';
 
 const Search = () => {
-  const { searchTerm, setSearchTerm } = useContext(SearchContext);
+  const dispatch = useDispatch();
+  const searchTerm = useSelector((state) => state.filter.searchTerm);
 
   const termChangeHandler = (event) => {
-    setSearchTerm(event.target.value);
+    dispatch(searchByTerm(event.target.value));
   };
 
   const clearHandler = () => {
-    setSearchTerm('');
+    dispatch(searchByTerm(''));
   };
 
   return (

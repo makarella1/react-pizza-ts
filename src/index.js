@@ -4,13 +4,14 @@ import App from './App';
 
 import { BrowserRouter } from 'react-router-dom';
 
-import { SearchContextProvider } from './context/SearchContextProvider';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <SearchContextProvider>
+  <Provider store={store}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </SearchContextProvider>
+  </Provider>
 );

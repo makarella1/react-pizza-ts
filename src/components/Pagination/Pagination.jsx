@@ -1,16 +1,18 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { SearchContext } from '../../context/SearchContextProvider';
+import { setPage } from '../../redux/slices/filterSlice';
 
 import styles from './Pagination.module.scss';
 
 const Pagination = () => {
   const [activePage, setActivePage] = useState(0);
-  const { totalPages, setCurrentPage } = useContext(SearchContext);
+  const dispatch = useDispatch();
+  const totalPages = useSelector((state) => state.filter.totalPages);
 
   const changePageHandler = (index) => {
     setActivePage(index);
-    setCurrentPage(index + 1);
+    dispatch(setPage(index + 1));
   };
 
   return (

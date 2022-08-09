@@ -1,19 +1,21 @@
-import { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { filterByCategory } from '../redux/slices/filterSlice';
 
 import { CATEGORIES_DATA } from '../utils/utilityData';
 
-import { SearchContext } from '../context/SearchContextProvider';
-
 const Categories = () => {
-  const { searchCategory, setSearchCategory } = useContext(SearchContext);
+  const dispatch = useDispatch();
+
+  const filterCategory = useSelector((state) => state.filter.filterCategory);
 
   return (
     <div className="categories">
       <ul>
         {CATEGORIES_DATA.map((categorie, index) => (
           <li
-            className={`${searchCategory === index ? 'active' : ''}`}
-            onClick={() => setSearchCategory(index)}
+            className={`${filterCategory === index ? 'active' : ''}`}
+            onClick={() => dispatch(filterByCategory(index))}
             key={index}
           >
             {categorie.name}
