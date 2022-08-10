@@ -7,14 +7,14 @@ import { CATEGORIES_DATA } from '../utils/utilityData';
 const Categories = () => {
   const dispatch = useDispatch();
 
-  const filterCategory = useSelector((state) => state.filter.filterCategory);
+  const categoryId = useSelector((state) => state.filter.categoryId);
 
   return (
     <div className="categories">
       <ul>
         {CATEGORIES_DATA.map((categorie, index) => (
           <li
-            className={`${filterCategory === index ? 'active' : ''}`}
+            className={`${categoryId === index ? 'active' : ''}`}
             onClick={() => dispatch(filterByCategory(index))}
             key={index}
           >

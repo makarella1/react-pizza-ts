@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { searchByTerm } from '../../redux/slices/filterSlice';
 
@@ -7,12 +8,15 @@ const Search = () => {
   const dispatch = useDispatch();
   const searchTerm = useSelector((state) => state.filter.searchTerm);
 
+  const inputRef = useRef();
+
   const termChangeHandler = (event) => {
     dispatch(searchByTerm(event.target.value));
   };
 
   const clearHandler = () => {
     dispatch(searchByTerm(''));
+    inputRef.current.focus();
   };
 
   return (
@@ -31,6 +35,7 @@ const Search = () => {
         placeholder="Шукати піцу"
         value={searchTerm}
         onChange={termChangeHandler}
+        ref={inputRef}
       />
       {searchTerm.length > 0 && (
         <svg

@@ -7,6 +7,7 @@ import styles from './Pagination.module.scss';
 
 const Pagination = () => {
   const [activePage, setActivePage] = useState(0);
+
   const dispatch = useDispatch();
   const totalPages = useSelector((state) => state.filter.totalPages);
 

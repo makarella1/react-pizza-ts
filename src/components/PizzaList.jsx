@@ -1,52 +1,82 @@
-import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+import { useSearchParams } from 'react-router-dom';
+
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { PizzaItem, Skeleton } from './index';
 
-import { setTotalPages } from '../redux/slices/filterSlice';
+import { setTotalPages, setFilters } from '../redux/slices/filterSlice';
 
 const LIMIT = 4;
-
-let isInitial = true;
 
 const PizzaList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [pizzaData, setPizzaData] = useState([]);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const hasQueries = useRef(false);
+  const isMounted = useRef(false);
+
   const dispatch = useDispatch();
 
   const currentPage = useSelector((state) => state.filter.currentPage);
   const searchTerm = useSelector((state) => state.filter.searchTerm);
-  const filterCategory = useSelector((state) => state.filter.filterCategory);
-  const sortBy = useSelector((state) => state.filter.sortBy);
+  const {
+    categoryId,
+    filter: { sort },
+  } = useSelector((state) => state.filter);
 
-  const categoryId = filterCategory === 0 ? '' : filterCategory;
+  const category = categoryId === 0 ? '' : categoryId;
+
+  useEffect(() => {
+    if (isMounted.current) {
+      setSearchParams({ category, currentPage, sort });
+    }
+
+    isMounted.current = true;
+  }, [category, currentPage, sort, setSearchParams]);
+
+  useEffect(() => {
+    if (window.location.search) {
+      dispatch(
+        setFilters({
+          categoryId: searchParams.get('category') || 0,
+          currentPage: searchParams.get('currentPage'),
+          sort: searchParams.get('sort'),
+        })
+      );
+
+      hasQueries.current = true;
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const res = await fetch(
-        `https://62ee5a4dc1ef25f3da874f12.mockapi.io/pizzas?page=${currentPage}&limit=${LIMIT}&category=${categoryId}&sortBy=${sortBy}`
-      );
+      const { data } = await axios
+        .get(
+          `https://62ee5a4dc1ef25f3da874f12.mockapi.io/pizzas?page=${currentPage}&limit=${LIMIT}&category=${category}&sortBy=${sort}`
+        )
+        .catch((error) => alert(error));
 
-      if (!res.ok) {
-        alert('error');
-      }
-
-      const data = await res.json();
       setPizzaData(data.pizzas);
 
-      if (isInitial) {
-        dispatch(setTotalPages(Math.ceil(data.count / LIMIT)));
-      }
+      dispatch(setTotalPages(Math.ceil(data.count / LIMIT)));
 
       setIsLoading(false);
-
-      isInitial = false;
     };
 
-    fetchData();
-  }, [categoryId, sortBy, currentPage, dispatch]);
+    if (!hasQueries.current) {
+      fetchData();
+    }
+
+    hasQueries.current = false;
+  }, [category, sort, currentPage, dispatch]);
 
   //I won't be searching through backend because mockAPI can't give me such an opportunity (it can technically but it doesn't work on practice)
   const pizzas = pizzaData

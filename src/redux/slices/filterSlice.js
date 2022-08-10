@@ -4,8 +4,11 @@ const initialState = {
   currentPage: 1,
   totalPages: 1,
   searchTerm: '',
-  sortBy: '',
-  filterCategory: 0,
+  categoryId: 0,
+  filter: {
+    name: 'популярністю',
+    sort: 'rating',
+  },
 };
 
 const filterSlice = createSlice({
@@ -19,18 +22,29 @@ const filterSlice = createSlice({
       state.totalPages = action.payload;
     },
     filterByCategory: (state, action) => {
-      state.filterCategory = action.payload;
+      state.categoryId = action.payload;
     },
     searchByTerm: (state, action) => {
       state.searchTerm = action.payload;
     },
     sort: (state, action) => {
-      state.sortBy = action.payload;
+      state.filter = action.payload;
+    },
+    setFilters: (state, action) => {
+      state.currentPage = +action.payload.currentPage;
+      state.categoryId = +action.payload.categoryId;
+      state.filter.sort = action.payload.sort;
     },
   },
 });
 
 export default filterSlice.reducer;
 
-export const { setPage, setTotalPages, filterByCategory, searchByTerm, sort } =
-  filterSlice.actions;
+export const {
+  setPage,
+  setTotalPages,
+  filterByCategory,
+  searchByTerm,
+  sort,
+  setFilters,
+} = filterSlice.actions;

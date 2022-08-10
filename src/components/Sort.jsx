@@ -1,31 +1,33 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useClickOutside } from '../hooks/useClickOutside';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { OPTIONS_DATA } from '../utils/utilityData';
 
 import { sort } from '../redux/slices/filterSlice';
 
 const Sort = () => {
+  const [categoryId, setCategoryId] = useState(0);
   const [isPopupOpened, setIsPopupOpened] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
+
+  const {
+    filter: { name },
+  } = useSelector((state) => state.filter);
 
   const dispatch = useDispatch();
 
   const popupRef = useRef(null);
 
-  const selectedOptionName = OPTIONS_DATA[activeIndex].name;
-
   const closePopup = useCallback(() => setIsPopupOpened(false), []);
 
   const optionClickHandler = (index) => {
-    setActiveIndex(index);
+    setCategoryId(index);
     setIsPopupOpened(false);
   };
 
   useEffect(() => {
-    dispatch(sort(OPTIONS_DATA[activeIndex].sort));
-  }, [activeIndex, dispatch]);
+    dispatch(sort(OPTIONS_DATA[categoryId]));
+  }, [categoryId, dispatch]);
 
   useClickOutside(popupRef, closePopup);
 
@@ -45,14 +47,14 @@ const Sort = () => {
           />
         </svg>
         <b>Сортувати за:</b>
-        <span onClick={() => setIsPopupOpened(true)}>{selectedOptionName}</span>
+        <span onClick={() => setIsPopupOpened(true)}>{name}</span>
       </div>
       {isPopupOpened && (
         <div className="sort__popup" ref={popupRef}>
           <ul>
             {OPTIONS_DATA.map((option, index) => (
               <li
-                className={`${activeIndex === index ? 'active' : ''}`}
+                className={`${categoryId === index ? 'active' : ''}`}
                 onClick={optionClickHandler.bind(null, index)}
                 key={index}
               >
