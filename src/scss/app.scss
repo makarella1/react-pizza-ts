@@ -95,17 +95,21 @@ body {
       font-size: 18px;
     }
 
-    span,
-    svg,
-    path {
-      transition: all $duration ease-in-out;
+    svg {
+      fill: #b6b6b6;
+    }
+
+    span {
+      transition: color $duration ease-in-out;
+    }
+
+    svg {
+      transition: fill $duration ease-in-out;
     }
 
     &:hover {
       svg {
-        path {
-          stroke: darken($color: #b6b6b6, $amount: 50);
-        }
+        fill: darken($color: #b6b6b6, $amount: 50);
       }
       span {
         color: darken($color: #b6b6b6, $amount: 50);
@@ -157,14 +161,6 @@ body {
       justify-content: space-between;
       width: 13%;
 
-      &-minus {
-        svg {
-          path:first-of-type {
-            display: none;
-          }
-        }
-      }
-
       b {
         font-size: 22px;
       }
@@ -203,14 +199,22 @@ body {
 
       .button {
         svg {
-          width: 11.5px;
-          height: 11.5px;
+          width: 15px;
+          height: 15px;
           position: relative;
+
+          transition: transform 0.5s ease-in-out;
         }
         &:hover,
         &:active {
           border-color: darken($color: $gray-line, $amount: 80);
           background-color: darken($color: $gray-line, $amount: 80);
+        }
+
+        &:hover {
+          svg {
+            transform: rotate(315deg);
+          }
         }
       }
     }
@@ -264,10 +268,7 @@ body {
 
         svg {
           margin-right: 12px;
-          path {
-            fill: transparent;
-            stroke-width: 2;
-          }
+          fill: #b6b6b6;
         }
       }
 
