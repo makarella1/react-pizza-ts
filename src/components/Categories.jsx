@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { filterByCategory } from '../redux/slices/filterSlice';
+import { getFilterSelector } from '../redux/slices/filterSlice';
 
 import { CATEGORIES_DATA } from '../utils/utilityData';
 
 const Categories = () => {
   const dispatch = useDispatch();
 
-  const categoryId = useSelector((state) => state.filter.categoryId);
+  const { categoryId } = useSelector(getFilterSelector);
 
   return (
     <div className="categories">

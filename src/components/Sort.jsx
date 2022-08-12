@@ -2,6 +2,8 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { useClickOutside } from '../hooks/useClickOutside';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { getFilterSelector } from '../redux/slices/filterSlice';
+
 import { OPTIONS_DATA } from '../utils/utilityData';
 
 import { sort } from '../redux/slices/filterSlice';
@@ -12,7 +14,7 @@ const Sort = () => {
 
   const {
     filter: { name },
-  } = useSelector((state) => state.filter);
+  } = useSelector(getFilterSelector);
 
   const dispatch = useDispatch();
 

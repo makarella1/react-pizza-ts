@@ -1,9 +1,11 @@
 import { useSelector } from 'react-redux';
 
+import { getCartSelector } from '../redux/slices/cartSlice';
+
 import { Cart } from '../components';
 
 const CartPage = () => {
-  const { totalPrice, items, totalCount } = useSelector((state) => state.cart);
+  const { totalPrice, items, totalCount } = useSelector(getCartSelector);
 
   return (
     <div className="content">

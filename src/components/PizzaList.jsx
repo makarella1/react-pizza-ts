@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { PizzaItem, Skeleton } from './index';
 
-import { setTotalPages, setFilters } from '../redux/slices/filterSlice';
+import { setFilters } from '../redux/slices/filterSlice';
+import { getFilterSelector } from '../redux/slices/filterSlice';
+import { getPizzasSelector } from '../redux/slices/pizzasSlice';
 
 import { fetchPizzas } from '../redux/slices/pizzasSlice';
 
@@ -19,16 +21,14 @@ const PizzaList = () => {
 
   const dispatch = useDispatch();
 
-  const currentPage = useSelector((state) => state.filter.currentPage);
-  const searchTerm = useSelector((state) => state.filter.searchTerm);
-  const { items, totalCount, isLoading, isError } = useSelector(
-    (state) => state.pizzas
-  );
-
   const {
+    currentPage,
+    searchTerm,
     categoryId,
     filter: { sort },
-  } = useSelector((state) => state.filter);
+  } = useSelector(getFilterSelector);
+
+  const { items, isLoading, isError } = useSelector(getPizzasSelector);
 
   const category = categoryId === 0 ? '' : categoryId;
 
@@ -73,7 +73,6 @@ const PizzaList = () => {
   useEffect(() => {
     const fetchData = async () => {
       dispatch(fetchPizzas(options));
-      dispatch(setTotalPages(Math.ceil(totalCount / LIMIT)));
     };
 
     if (!hasQueries.current) {
@@ -81,7 +80,7 @@ const PizzaList = () => {
     }
 
     hasQueries.current = false;
-  }, [options, totalCount, dispatch]);
+  }, [options, dispatch]);
 
   //I won't be searching through backend because mockAPI can't give me such an opportunity (it can technically but it doesn't work on practice)
   const pizzas = items

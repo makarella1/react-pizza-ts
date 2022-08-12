@@ -40,6 +40,8 @@ const filterSlice = createSlice({
 
 export default filterSlice.reducer;
 
+export const getFilterSelector = (state) => state.filter;
+
 export const {
   setPage,
   setTotalPages,
