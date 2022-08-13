@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { filterByCategory } from '../redux/slices/filterSlice';
@@ -5,7 +6,7 @@ import { getFilterSelector } from '../redux/slices/filterSlice';
 
 import { CATEGORIES_DATA } from '../utils/utilityData';
 
-const Categories = () => {
+const Categories: FC = () => {
   const dispatch = useDispatch();
 
   const { categoryId } = useSelector(getFilterSelector);

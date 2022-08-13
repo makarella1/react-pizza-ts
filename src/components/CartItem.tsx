@@ -1,17 +1,21 @@
+import { FC } from 'react';
+
 import { useDispatch } from 'react-redux';
 
 import { HiMinus, HiPlus } from 'react-icons/hi';
 
 import { addItem, removeItem } from '../redux/slices/cartSlice';
 
-const CartItem = ({
-  imageUrl = '',
-  name = '',
-  type = '',
-  size = 0,
-  price = 0,
-  count = 0,
-  id = 0,
+import { ICartItem } from '../models';
+
+const CartItem: FC<ICartItem> = ({
+  imageUrl,
+  name,
+  type,
+  size,
+  price,
+  count,
+  id,
 }) => {
   const dispatch = useDispatch();
 
@@ -20,6 +24,7 @@ const CartItem = ({
       id,
       type,
       size,
+      name,
     };
 
     dispatch(addItem(pizzaItem));

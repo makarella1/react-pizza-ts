@@ -1,23 +1,23 @@
-import { useRef } from 'react';
+import { useRef, FC, ChangeEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { searchByTerm } from '../../redux/slices/filterSlice';
 import { getFilterSelector } from '../../redux/slices/filterSlice';
 
 import styles from './Search.module.scss';
 
-const Search = () => {
+const Search: FC = () => {
   const dispatch = useDispatch();
   const { searchTerm } = useSelector(getFilterSelector);
 
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const termChangeHandler = (event) => {
+  const termChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(searchByTerm(event.target.value));
   };
 
   const clearHandler = () => {
     dispatch(searchByTerm(''));
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   return (

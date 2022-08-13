@@ -1,19 +1,20 @@
+import { useEffect, useRef, useMemo, FC } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { useEffect, useRef, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { PizzaItem, Skeleton } from './index';
+import { PizzaItem, PizzasSkeleton } from './index';
 
 import { setFilters } from '../redux/slices/filterSlice';
 import { getFilterSelector } from '../redux/slices/filterSlice';
 import { getPizzasSelector } from '../redux/slices/pizzasSlice';
 
 import { fetchPizzas } from '../redux/slices/pizzasSlice';
+import { IPizzaItem } from '../models';
 
 const LIMIT = 4;
 
-const PizzaList = () => {
+const PizzaList: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const hasQueries = useRef(false);
@@ -72,6 +73,7 @@ const PizzaList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      //@ts-ignore
       dispatch(fetchPizzas(options));
     };
 
@@ -84,13 +86,13 @@ const PizzaList = () => {
 
   //I won't be searching through backend because mockAPI can't give me such an opportunity (it can technically but it doesn't work on practice)
   const pizzas = items
-    .filter((item) =>
+    .filter((item: IPizzaItem) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
     )
-    .map((pizza) => <PizzaItem {...pizza} key={pizza.id} />);
+    .map((pizza: IPizzaItem) => <PizzaItem {...pizza} key={pizza.id} />);
 
   const skeletons = [...Array(LIMIT)].map((_, index) => (
-    <Skeleton key={index} />
+    <PizzasSkeleton key={index} />
   ));
 
   return (

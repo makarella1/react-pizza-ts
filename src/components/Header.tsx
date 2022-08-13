@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Search } from './index';
 
@@ -6,7 +7,7 @@ import { getCartSelector } from '../redux/slices/cartSlice';
 
 import pizzaLogo from '../assets/img/pizza-logo.svg';
 
-const Header = () => {
+const Header: FC = () => {
   const { totalCount, totalPrice } = useSelector(getCartSelector);
 
   return (

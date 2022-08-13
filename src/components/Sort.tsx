@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, FC } from 'react';
 import { useClickOutside } from '../hooks/useClickOutside';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,7 +8,7 @@ import { OPTIONS_DATA } from '../utils/utilityData';
 
 import { sort } from '../redux/slices/filterSlice';
 
-const Sort = () => {
+const Sort: FC = () => {
   const [categoryId, setCategoryId] = useState(0);
   const [isPopupOpened, setIsPopupOpened] = useState(false);
 
@@ -22,7 +22,7 @@ const Sort = () => {
 
   const closePopup = useCallback(() => setIsPopupOpened(false), []);
 
-  const optionClickHandler = (index) => {
+  const optionClickHandler = (index: number) => {
     setCategoryId(index);
     setIsPopupOpened(false);
   };

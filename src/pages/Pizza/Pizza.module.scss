@@ -1,0 +1,45 @@
+@import '../../scss/variables';
+
+.pizzaWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.pizzaImage {
+  margin-bottom: 20px;
+
+  @media (max-width: 750px) {
+    height: 260px;
+    width: 260px;
+  }
+}
+
+.pizzaTitle {
+  margin-bottom: 10px;
+
+  font-weight: 900;
+  font-size: 40px;
+
+  @media (max-width: 750px) {
+    font-size: 24px;
+  }
+}
+
+.pizzaPrice {
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 20px;
+
+  color: $orange;
+}
+
+.pizzaDescription {
+  font-weight: 600;
+  font-size: 18px;
+
+  margin-bottom: 20px;
+}

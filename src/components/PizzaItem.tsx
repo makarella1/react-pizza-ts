@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useState, FC } from 'react';
 
 import { useDispatch } from 'react-redux';
 
 import { addItem } from '../redux/slices/cartSlice';
 
 import { MdOutlineAdd } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
-const PizzaItem = ({
+import { IPizzaItem } from '../models';
+
+const PizzaItem: FC<IPizzaItem> = ({
   name = '',
   imageUrl = '',
   price = 0,
@@ -37,8 +40,10 @@ const PizzaItem = ({
 
   return (
     <div className="pizza-block">
-      <img className="pizza-block__image" src={imageUrl} alt={name} />
-      <h4 className="pizza-block__title">{name}</h4>
+      <Link to={`/pizzas/${id}`}>
+        <img className="pizza-block__image" src={imageUrl} alt={name} />
+        <h4 className="pizza-block__title">{name}</h4>
+      </Link>
       <div className="pizza-block__selector">
         <ul>
           {types.map((type, index) => (
@@ -61,6 +66,7 @@ const PizzaItem = ({
           ))}
         </ul>
       </div>
+
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">від {price} ₴</div>
         <button

@@ -1,10 +1,11 @@
+import { FC } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Wrapper, Header } from './components';
 import { Home, CartPage, NotFound, Pizza } from './pages';
 
 import './scss/app.scss';
 
-const App = () => {
+const App: FC = () => {
   return (
     <Wrapper>
       <Header />

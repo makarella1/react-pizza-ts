@@ -1,7 +1,8 @@
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Link } from 'react-router-dom';
-import { CartItem } from '../components';
+import { CartItem } from '.';
 
 import { clearItems } from '../redux/slices/cartSlice';
 
@@ -9,14 +10,18 @@ import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
 import { IoIosArrowBack } from 'react-icons/io';
 
+import { ICartItem } from '../models';
+
 import emptyCartImg from './../assets/img/empty-cart.png';
 
-const Cart = ({
-  items = [],
-  totalPrice = 0,
-  totalCount = 0,
-  isEmpty = false,
-}) => {
+interface CartProps {
+  items: ICartItem[];
+  totalPrice: number;
+  totalCount: number;
+  isEmpty: boolean;
+}
+
+const Cart: FC<CartProps> = ({ items, totalPrice, totalCount, isEmpty }) => {
   const dispatch = useDispatch();
 
   const clearCartHandler = () => {
