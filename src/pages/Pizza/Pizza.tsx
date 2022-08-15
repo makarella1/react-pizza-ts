@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -9,12 +9,13 @@ import { getPizzaSelector } from '../../redux/slices/pizzaSlice';
 
 import styles from './Pizza.module.scss';
 
-const Pizza = () => {
+const Pizza: FC = () => {
   const { item, isLoading } = useSelector(getPizzaSelector);
   const dispatch = useDispatch();
   const { id } = useParams();
 
   useEffect(() => {
+    //@ts-ignore
     dispatch(fetchPizzaById(id));
   }, [id, dispatch]);
 

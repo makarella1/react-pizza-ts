@@ -18,7 +18,7 @@ const Sort: FC = () => {
 
   const dispatch = useDispatch();
 
-  const popupRef = useRef(null);
+  const popupRef = useRef<HTMLDivElement>(null);
 
   const closePopup = useCallback(() => setIsPopupOpened(false), []);
 

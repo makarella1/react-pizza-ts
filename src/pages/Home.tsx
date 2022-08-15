@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, FC } from 'react';
 
 import { Categories, Sort, PizzaList, Pagination } from '../components';
 
-const Home = () => {
+const Home: FC = () => {
   useEffect(() => {
     window.scrollTo({
       top: 0,

@@ -1,19 +1,25 @@
+import { FC } from 'react';
 import { useSelector } from 'react-redux';
 
 import { getCartSelector } from '../redux/slices/cartSlice';
 
 import { Cart } from '../components';
 
-const CartPage = () => {
+const CartPage: FC = () => {
   const { totalPrice, items, totalCount } = useSelector(getCartSelector);
 
   return (
     <div className="content">
       <div className="container container--cart">
         {totalCount === 0 ? (
-          <Cart isEmpty />
+          <Cart isEmpty={true} />
         ) : (
-          <Cart items={items} totalCount={totalCount} totalPrice={totalPrice} />
+          <Cart
+            items={items}
+            totalCount={totalCount}
+            totalPrice={totalPrice}
+            isEmpty={false}
+          />
         )}
       </div>
     </div>

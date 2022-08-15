@@ -15,9 +15,9 @@ import { ICartItem } from '../models';
 import emptyCartImg from './../assets/img/empty-cart.png';
 
 interface CartProps {
-  items: ICartItem[];
-  totalPrice: number;
-  totalCount: number;
+  items?: ICartItem[];
+  totalPrice?: number;
+  totalCount?: number;
   isEmpty: boolean;
 }
 
@@ -59,7 +59,7 @@ const Cart: FC<CartProps> = ({ items, totalPrice, totalCount, isEmpty }) => {
         </div>
       </div>
       <div className="content__items">
-        {items.map((item) => (
+        {items?.map((item) => (
           <CartItem {...item} key={item.id} />
         ))}
       </div>

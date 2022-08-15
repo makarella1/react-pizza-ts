@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
 
-export const useClickOutside = (ref, closeHandler) => {
+export const useClickOutside = (
+  ref: React.RefObject<HTMLDivElement>,
+  closeHandler: () => void
+) => {
   useEffect(() => {
-    const clickOutsideHandler = (event) => {
-      if (!ref.current || ref.current.contains(event.target)) {
+    const clickOutsideHandler = (event: TouchEvent | MouseEvent) => {
+      if (!ref.current || ref.current.contains(event.target as Node)) {
         return;
       } else {
         closeHandler();
