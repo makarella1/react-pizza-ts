@@ -11,11 +11,17 @@ export interface IPizzaItem {
 }
 
 export interface ICartItem {
-  id: number;
+  id: string;
   name: string;
-  imageUrl: string;
+  imageUrl?: string;
   type: string;
   size: number;
-  price: number;
-  count: number;
+  price?: number;
+  count?: number;
+}
+export interface IOptions {
+  currentPage: number | string;
+  limit?: number;
+  category: string;
+  sort: string;
 }

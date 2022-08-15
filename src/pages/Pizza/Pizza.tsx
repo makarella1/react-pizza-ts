@@ -7,16 +7,17 @@ import { Link } from 'react-router-dom';
 import { fetchPizzaById } from '../../redux/slices/pizzaSlice';
 import { getPizzaSelector } from '../../redux/slices/pizzaSlice';
 
+import { useAppDispatch } from '../../redux/store';
+
 import styles from './Pizza.module.scss';
 
 const Pizza: FC = () => {
   const { item, isLoading } = useSelector(getPizzaSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { id } = useParams();
 
   useEffect(() => {
-    //@ts-ignore
-    dispatch(fetchPizzaById(id));
+    dispatch(fetchPizzaById(id!));
   }, [id, dispatch]);
 
   if (isLoading) {

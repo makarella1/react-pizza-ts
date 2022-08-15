@@ -12,6 +12,8 @@ import { getPizzasSelector } from '../redux/slices/pizzasSlice';
 import { fetchPizzas } from '../redux/slices/pizzasSlice';
 import { IPizzaItem } from '../models';
 
+import { useAppDispatch } from '../redux/store';
+
 const LIMIT = 4;
 
 const PizzaList: FC = () => {
@@ -20,7 +22,7 @@ const PizzaList: FC = () => {
   const hasQueries = useRef(false);
   const isMounted = useRef(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {
     currentPage,
@@ -35,8 +37,8 @@ const PizzaList: FC = () => {
 
   const options = useMemo(
     () => ({
-      currentPage,
-      category,
+      currentPage: currentPage.toString(), //Just so setSearchParams won't be yelling at me for non-strings in search params
+      category: category.toString(),
       sort,
       limit: LIMIT,
     }),
@@ -73,7 +75,6 @@ const PizzaList: FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      //@ts-ignore
       dispatch(fetchPizzas(options));
     };
 
