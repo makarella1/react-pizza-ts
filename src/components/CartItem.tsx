@@ -1,10 +1,10 @@
 import { FC } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../redux/store';
 
 import { HiMinus, HiPlus } from 'react-icons/hi';
 
-import { addItem, removeItem } from '../redux/slices/cartSlice';
+import { addItem, removeItem } from '../redux/cart/slice';
 
 import { ICartItem } from '../models';
 
@@ -17,7 +17,7 @@ const CartItem: FC<ICartItem> = ({
   count,
   id,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const addItemHandler = () => {
     const pizzaItem = {

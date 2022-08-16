@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 
-import { getCartSelector } from '../redux/slices/cartSlice';
+import { getCartSelector } from '../redux/cart/selectors';
 
 import { Cart } from '../components';
 

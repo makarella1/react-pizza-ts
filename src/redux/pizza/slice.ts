@@ -1,15 +1,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 import { fetchPizza } from '../../services/pizzasService';
-import { RootState } from '../store';
 
 import { IPizzaItem } from './../../models';
-
-interface PizzaSliceState {
-  item: IPizzaItem;
-  isLoading: boolean;
-  isError: boolean;
-}
+import { PizzaSliceState } from './types';
 
 const initialState: PizzaSliceState = {
   item: {
@@ -53,7 +47,5 @@ const pizzaSlice = createSlice({
     );
   },
 });
-
-export const getPizzaSelector = (state: RootState) => state.pizza;
 
 export default pizzaSlice.reducer;

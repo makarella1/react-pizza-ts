@@ -3,16 +3,10 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { fetchData } from '../../services/pizzasService';
 import { RootState } from '../store';
 
-import { setTotalPages } from './filterSlice';
+import { setTotalPages } from '../filter/slice';
 
 import { IPizzaItem, IOptions } from './../../models';
-
-interface PizzasSliceState {
-  items: IPizzaItem[];
-  totalCount: number;
-  isLoading: boolean;
-  isError: boolean;
-}
+import { PizzasSliceState } from './types';
 
 const initialState: PizzasSliceState = {
   items: [],
@@ -58,7 +52,5 @@ const pizzasSlice = createSlice({
     });
   },
 });
-
-export const getPizzasSelector = (state: RootState) => state.pizzas;
 
 export default pizzasSlice.reducer;

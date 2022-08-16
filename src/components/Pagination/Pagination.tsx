@@ -1,21 +1,30 @@
-import { useState, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, FC, useEffect, memo } from 'react';
+import { useSelector } from 'react-redux';
 
-import { setPage } from '../../redux/slices/filterSlice';
-import { getFilterSelector } from '../../redux/slices/filterSlice';
+import { useAppDispatch } from '../../redux/store';
+
+import { setPage } from '../../redux/filter/slice';
+import { getFilterSelector } from '../../redux/filter/selectors';
 
 import styles from './Pagination.module.scss';
 
-const Pagination: FC = () => {
+const Pagination: FC = memo(() => {
   const [activePage, setActivePage] = useState(0);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { totalPages } = useSelector(getFilterSelector);
 
   const changePageHandler = (index: number) => {
     setActivePage(index);
     dispatch(setPage(index + 1));
   };
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, [activePage]);
 
   return (
     <div className={styles.pagination}>
@@ -34,5 +43,5 @@ const Pagination: FC = () => {
       ))}
     </div>
   );
-};
+});
 export default Pagination;

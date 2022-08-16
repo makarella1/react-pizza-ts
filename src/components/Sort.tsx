@@ -1,14 +1,25 @@
-import { useState, useCallback, useRef, useEffect, FC } from 'react';
+import {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  FC,
+  memo,
+  useMemo,
+  ReactNode,
+} from 'react';
 import { useClickOutside } from '../hooks/useClickOutside';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { getFilterSelector } from '../redux/slices/filterSlice';
+import { useAppDispatch } from '../redux/store';
+
+import { getFilterSelector } from '../redux/filter/selectors';
 
 import { OPTIONS_DATA } from '../utils/utilityData';
 
-import { sort } from '../redux/slices/filterSlice';
+import { sort } from '../redux/filter/slice';
 
-const Sort: FC = () => {
+const Sort: FC = memo(() => {
   const [categoryId, setCategoryId] = useState(0);
   const [isPopupOpened, setIsPopupOpened] = useState(false);
 
@@ -16,7 +27,7 @@ const Sort: FC = () => {
     filter: { name },
   } = useSelector(getFilterSelector);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const popupRef = useRef<HTMLDivElement>(null);
 
@@ -30,6 +41,20 @@ const Sort: FC = () => {
   useEffect(() => {
     dispatch(sort(OPTIONS_DATA[categoryId]));
   }, [categoryId, dispatch]);
+
+  const options = useMemo<ReactNode>(
+    () =>
+      OPTIONS_DATA.map((option, index) => (
+        <li
+          className={`${categoryId === index ? 'active' : ''}`}
+          onClick={optionClickHandler.bind(null, index)}
+          key={index}
+        >
+          {option.name}
+        </li>
+      )),
+    [categoryId]
+  );
 
   useClickOutside(popupRef, closePopup);
 
@@ -53,20 +78,10 @@ const Sort: FC = () => {
       </div>
       {isPopupOpened && (
         <div className="sort__popup" ref={popupRef}>
-          <ul>
-            {OPTIONS_DATA.map((option, index) => (
-              <li
-                className={`${categoryId === index ? 'active' : ''}`}
-                onClick={optionClickHandler.bind(null, index)}
-                key={index}
-              >
-                {option.name}
-              </li>
-            ))}
-          </ul>
+          <ul>{options}</ul>
         </div>
       )}
     </div>
   );
-};
+});
 export default Sort;

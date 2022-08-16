@@ -1,12 +1,14 @@
 import { useRef, FC, ChangeEvent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { searchByTerm } from '../../redux/slices/filterSlice';
-import { getFilterSelector } from '../../redux/slices/filterSlice';
+import { useSelector } from 'react-redux';
+import { searchByTerm } from '../../redux/filter/slice';
+import { getFilterSelector } from '../../redux/filter/selectors';
+
+import { useAppDispatch } from '../../redux/store';
 
 import styles from './Search.module.scss';
 
 const Search: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { searchTerm } = useSelector(getFilterSelector);
 
   const inputRef = useRef<HTMLInputElement>(null);

@@ -1,11 +1,11 @@
 import { useEffect, FC } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 
-import { fetchPizzaById } from '../../redux/slices/pizzaSlice';
-import { getPizzaSelector } from '../../redux/slices/pizzaSlice';
+import { fetchPizzaById } from '../../redux/pizza/slice';
+import { getPizzaSelector } from '../../redux/pizza/selectors';
 
 import { useAppDispatch } from '../../redux/store';
 

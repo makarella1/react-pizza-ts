@@ -1,30 +1,37 @@
-import { FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC, memo, ReactNode, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
-import { filterByCategory } from '../redux/slices/filterSlice';
-import { getFilterSelector } from '../redux/slices/filterSlice';
+import { useAppDispatch } from '../redux/store';
+
+import { filterByCategory } from '../redux/filter/slice';
+import { getFilterSelector } from '../redux/filter/selectors';
 
 import { CATEGORIES_DATA } from '../utils/utilityData';
 
-const Categories: FC = () => {
-  const dispatch = useDispatch();
+const Categories: FC = memo(() => {
+  const dispatch = useAppDispatch();
 
   const { categoryId } = useSelector(getFilterSelector);
 
+  const categories = useMemo<ReactNode>(
+    () =>
+      CATEGORIES_DATA.map((categorie, index) => (
+        <li
+          className={`${categoryId === index ? 'active' : ''}`}
+          onClick={() => dispatch(filterByCategory(index))}
+          key={index}
+        >
+          {categorie.name}
+        </li>
+      )),
+    [categoryId, dispatch]
+  );
+
   return (
     <div className="categories">
-      <ul>
-        {CATEGORIES_DATA.map((categorie, index) => (
-          <li
-            className={`${categoryId === index ? 'active' : ''}`}
-            onClick={() => dispatch(filterByCategory(index))}
-            key={index}
-          >
-            {categorie.name}
-          </li>
-        ))}
-      </ul>
+      <ul>{categories}</ul>
     </div>
   );
-};
+});
+
 export default Categories;

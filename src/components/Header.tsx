@@ -1,13 +1,13 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Search } from './index';
 
 import { useSelector } from 'react-redux';
-import { getCartSelector } from '../redux/slices/cartSlice';
+import { getCartSelector } from '../redux/cart/selectors';
 
 import pizzaLogo from '../assets/img/pizza-logo.svg';
 
-const Header: FC = () => {
+const Header: FC = memo(() => {
   const { totalCount, totalPrice } = useSelector(getCartSelector);
 
   return (
@@ -62,5 +62,5 @@ const Header: FC = () => {
       </div>
     </header>
   );
-};
+});
 export default Header;

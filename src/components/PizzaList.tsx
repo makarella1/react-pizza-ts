@@ -1,22 +1,21 @@
-import { useEffect, useRef, useMemo, FC } from 'react';
+import { useEffect, useRef, useMemo, FC, memo, ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { PizzaItem, PizzasSkeleton } from './index';
 
-import { setFilters } from '../redux/slices/filterSlice';
-import { getFilterSelector } from '../redux/slices/filterSlice';
-import { getPizzasSelector } from '../redux/slices/pizzasSlice';
+import { setFilters } from '../redux/filter/slice';
+import { getFilterSelector } from '../redux/filter/selectors';
+import { getPizzasSelector } from '../redux/pizzas/selectors';
 
-import { fetchPizzas } from '../redux/slices/pizzasSlice';
-import { IPizzaItem } from '../models';
+import { fetchPizzas } from '../redux/pizzas/slice';
 
 import { useAppDispatch } from '../redux/store';
 
 const LIMIT = 4;
 
-const PizzaList: FC = () => {
+const PizzaList: FC = memo(() => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const hasQueries = useRef(false);
@@ -86,11 +85,15 @@ const PizzaList: FC = () => {
   }, [options, dispatch]);
 
   //I won't be searching through backend because mockAPI can't give me such an opportunity (it can technically but it doesn't work on practice)
-  const pizzas = items
-    .filter((item: IPizzaItem) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .map((pizza: IPizzaItem) => <PizzaItem {...pizza} key={pizza.id} />);
+  const pizzas = useMemo<ReactNode>(
+    () =>
+      items
+        .filter((item) =>
+          item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .map((pizza) => <PizzaItem {...pizza} key={pizza.id} />),
+    [searchTerm, items]
+  );
 
   const skeletons = [...Array(LIMIT)].map((_, index) => (
     <PizzasSkeleton key={index} />
@@ -108,5 +111,5 @@ const PizzaList: FC = () => {
       {!isLoading && pizzas}
     </div>
   );
-};
+});
 export default PizzaList;

@@ -3,13 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ICartItem } from './../../models';
 
 import { nanoid } from 'nanoid';
-import { RootState } from '../store';
-
-interface CartSliceState {
-  totalPrice: number;
-  totalCount: number;
-  items: ICartItem[];
-}
+import { CartSliceState } from './types';
 
 const initialState: CartSliceState = {
   totalPrice: 0,
@@ -65,8 +59,6 @@ const cartSlice = createSlice({
     },
   },
 });
-
-export const getCartSelector = (state: RootState) => state.cart;
 
 export const { addItem, removeItem, clearItems } = cartSlice.actions;
 

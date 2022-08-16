@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../redux/store';
 
 import { Link } from 'react-router-dom';
 import { CartItem } from '.';
 
-import { clearItems } from '../redux/slices/cartSlice';
+import { clearItems } from '../redux/cart/slice';
 
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
@@ -22,7 +22,7 @@ interface CartProps {
 }
 
 const Cart: FC<CartProps> = ({ items, totalPrice, totalCount, isEmpty }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const clearCartHandler = () => {
     dispatch(clearItems());

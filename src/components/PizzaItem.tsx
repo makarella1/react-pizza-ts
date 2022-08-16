@@ -1,8 +1,8 @@
 import { useState, FC } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../redux/store';
 
-import { addItem } from '../redux/slices/cartSlice';
+import { addItem } from '../redux/cart/slice';
 
 import { MdOutlineAdd } from 'react-icons/md';
 import { Link } from 'react-router-dom';
@@ -19,9 +19,8 @@ const PizzaItem: FC<IPizzaItem> = ({
 }) => {
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
-  const [pizzasCount, setPizzasCount] = useState(0);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const addPizzaHandler = () => {
     const pizzaItem = {
@@ -35,7 +34,7 @@ const PizzaItem: FC<IPizzaItem> = ({
 
     dispatch(addItem(pizzaItem));
 
-    setPizzasCount((prevState) => (prevState += 1));
+    // setPizzasCount((prevState) => (prevState += 1));
   };
 
   return (
@@ -75,7 +74,7 @@ const PizzaItem: FC<IPizzaItem> = ({
         >
           <MdOutlineAdd />
           <span>Додати</span>
-          {pizzasCount > 0 && <i>{pizzasCount}</i>}
+          {/* {pizzasCount > 0 && <i>{pizzasCount}</i>} */}
         </button>
       </div>
     </div>

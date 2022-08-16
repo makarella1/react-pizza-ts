@@ -1,19 +1,48 @@
 import { useDispatch } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
-import filterReducer from './slices/filterSlice';
-import cartReducer from './slices/cartSlice';
-import pizzasReducer from './slices/pizzasSlice';
-import pizzaReducer from './slices/pizzaSlice';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+import filterReducer from './filter/slice';
+import cartReducer from './cart/slice';
+import pizzasReducer from './pizzas/slice';
+import pizzaReducer from './pizza/slice';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  blacklist: ['filter', 'pizzas', 'pizza'],
+};
+
+const reducer = combineReducers({
+  filter: filterReducer,
+  cart: cartReducer,
+  pizzas: pizzasReducer,
+  pizza: pizzaReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, reducer);
 
 export const store = configureStore({
-  reducer: {
-    filter: filterReducer,
-    cart: cartReducer,
-    pizzas: pizzasReducer,
-    pizza: pizzaReducer,
-  },
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
+export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 
