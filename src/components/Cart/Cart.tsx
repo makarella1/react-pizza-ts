@@ -1,18 +1,20 @@
 import { FC } from 'react';
-import { useAppDispatch } from '../redux/store';
+import { useAppDispatch } from '../../redux/store';
 
 import { Link } from 'react-router-dom';
-import { CartItem } from '.';
+import { CartItem, Button } from '..';
 
-import { clearItems } from '../redux/cart/slice';
+import { clearItems } from '../../redux/cart/slice';
 
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
 import { IoIosArrowBack } from 'react-icons/io';
 
-import { ICartItem } from '../models';
+import { ICartItem } from '../../models';
 
-import emptyCartImg from './../assets/img/empty-cart.png';
+import styles from './Cart.module.scss';
+
+import emptyCartImg from './../../assets/img/empty-cart.png';
 
 interface CartProps {
   items?: ICartItem[];
@@ -30,7 +32,7 @@ const Cart: FC<CartProps> = ({ items, totalPrice, totalCount, isEmpty }) => {
 
   if (isEmpty) {
     return (
-      <div className="cart cart--empty">
+      <div className={styles.cartEmpty}>
         <h2>Агов! А де піца?</h2>
         <p>
           Нам здається, що ви ще не замовили жодної піци.
@@ -39,32 +41,34 @@ const Cart: FC<CartProps> = ({ items, totalPrice, totalCount, isEmpty }) => {
           головну :)
         </p>
         <img src={emptyCartImg} alt="Empty cart" />
-        <Link className="button button--black" to="/">
-          <span>На головну</span>
+        <Link to="/">
+          <Button className={styles.cartEmptyButton} isDark={true}>
+            <span>На головну</span>
+          </Button>
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="cart">
-      <div className="cart__top">
-        <h2 className="content__title">
+    <>
+      <div className={styles.cartTop}>
+        <h2 className={styles.cartTitle}>
           <AiOutlineShoppingCart />
           Кошик
         </h2>
-        <div className="cart__clear" onClick={clearCartHandler}>
+        <div className={styles.cartClear} onClick={clearCartHandler}>
           <BsTrash />
           <span>Очистити кошик</span>
         </div>
       </div>
-      <div className="content__items">
+      <div className={styles.cartItem}>
         {items?.map((item) => (
           <CartItem {...item} key={item.id} />
         ))}
       </div>
-      <div className="cart__bottom">
-        <div className="cart__bottom-details">
+      <div className={styles.cartBottom}>
+        <div className={styles.cartDetails}>
           <span>
             Усього піц: <b>{totalCount} шт.</b>
           </span>
@@ -72,21 +76,21 @@ const Cart: FC<CartProps> = ({ items, totalPrice, totalCount, isEmpty }) => {
             Ціна замовлення: <b>{totalPrice} ₴</b>
           </span>
         </div>
-        <div className="cart__bottom-buttons">
-          <Link
-            to="/"
-            className="button button--outline button--add go-back-btn"
-          >
-            <IoIosArrowBack />
+        <div className={styles.cartButtons}>
+          <Link to="/">
+            <Button isAdd={true} isOutline={true} isBack={true}>
+              <IoIosArrowBack />
 
-            <span>На головну</span>
+              <span>На головну</span>
+            </Button>
           </Link>
-          <button className="button pay-btn">
+
+          <Button isPay={true}>
             <span>Замовити зараз</span>
-          </button>
+          </Button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

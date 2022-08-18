@@ -1,16 +1,18 @@
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 
-import { getCartSelector } from '../redux/cart/selectors';
+import { getCartSelector } from '../../redux/cart/selectors';
 
-import { Cart } from '../components';
+import { Cart, Container } from '../../components';
+
+import styles from './CartPage.module.scss';
 
 const CartPage: FC = () => {
   const { totalPrice, items, totalCount } = useSelector(getCartSelector);
 
   return (
-    <div className="content">
-      <div className="container container--cart">
+    <div className={styles.content}>
+      <Container isCartContainer={true}>
         {totalCount === 0 ? (
           <Cart isEmpty={true} />
         ) : (
@@ -21,8 +23,9 @@ const CartPage: FC = () => {
             isEmpty={false}
           />
         )}
-      </div>
+      </Container>
     </div>
   );
 };
+
 export default CartPage;

@@ -1,13 +1,18 @@
 import { useState, FC } from 'react';
 
-import { useAppDispatch } from '../redux/store';
+import { clsx } from 'clsx';
 
-import { addItem } from '../redux/cart/slice';
+import { useAppDispatch } from '../../redux/store';
+
+import { addItem } from '../../redux/cart/slice';
 
 import { MdOutlineAdd } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-import { IPizzaItem } from '../models';
+import { IPizzaItem } from '../../models';
+import Button from '../UI/Button/Button';
+
+import styles from './PizzaItem.module.scss';
 
 const PizzaItem: FC<IPizzaItem> = ({
   name = '',
@@ -33,21 +38,21 @@ const PizzaItem: FC<IPizzaItem> = ({
     };
 
     dispatch(addItem(pizzaItem));
-
-    // setPizzasCount((prevState) => (prevState += 1));
   };
 
   return (
-    <div className="pizza-block">
+    <div className={styles.pizzaItem}>
       <Link to={`/pizzas/${id}`}>
-        <img className="pizza-block__image" src={imageUrl} alt={name} />
-        <h4 className="pizza-block__title">{name}</h4>
+        <img className={styles.pizzaItemImg} src={imageUrl} alt={name} />
+        <h4 className={styles.pizzaItemTitle}>{name}</h4>
       </Link>
-      <div className="pizza-block__selector">
+      <div className={styles.pizzaItemSelector}>
         <ul>
           {types.map((type, index) => (
             <li
-              className={`${activeType === index ? 'active' : ''}`}
+              className={clsx(
+                activeType === index && `${styles.activePizzaSelector}`
+              )}
               onClick={() => setActiveType(index)}
               key={index}
             >
@@ -58,7 +63,9 @@ const PizzaItem: FC<IPizzaItem> = ({
         <ul>
           {sizes.map((size, index) => (
             <li
-              className={`${activeSize === index ? 'active' : ''}`}
+              className={clsx(
+                activeSize === index && `${styles.activePizzaSelector}`
+              )}
               onClick={() => setActiveSize(index)}
               key={index}
             >{`${size} см.`}</li>
@@ -66,16 +73,12 @@ const PizzaItem: FC<IPizzaItem> = ({
         </ul>
       </div>
 
-      <div className="pizza-block__bottom">
-        <div className="pizza-block__price">від {price} ₴</div>
-        <button
-          className="button button--outline button--add"
-          onClick={addPizzaHandler}
-        >
+      <div className={styles.pizzaItemBottom}>
+        <div className={styles.pizzaItemPrice}>від {price} ₴</div>
+        <Button isOutline={true} isAdd={true} onClick={addPizzaHandler}>
           <MdOutlineAdd />
           <span>Додати</span>
-          {/* {pizzasCount > 0 && <i>{pizzasCount}</i>} */}
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -1,6 +1,14 @@
 import { useEffect, FC } from 'react';
 
-import { Categories, Sort, PizzaList, Pagination } from '../components';
+import {
+  Categories,
+  Sort,
+  PizzaList,
+  Pagination,
+  Container,
+} from '../../components';
+
+import styles from './Home.module.scss';
 
 const Home: FC = () => {
   useEffect(() => {
@@ -11,16 +19,16 @@ const Home: FC = () => {
   }, []);
 
   return (
-    <main className="content">
-      <div className="container">
-        <div className="content__top">
+    <main className={styles.homeWrapper}>
+      <Container>
+        <div className={styles.homeTop}>
           <Categories />
           <Sort />
         </div>
-        <h2 className="content__title">Усі піци</h2>
+        <h2 className={styles.homeTitle}>Усі піци</h2>
         <PizzaList />
         <Pagination />
-      </div>
+      </Container>
     </main>
   );
 };

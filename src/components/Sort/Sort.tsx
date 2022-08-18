@@ -8,16 +8,22 @@ import {
   useMemo,
   ReactNode,
 } from 'react';
-import { useClickOutside } from '../hooks/useClickOutside';
+import { useClickOutside } from '../../hooks/useClickOutside';
 import { useSelector } from 'react-redux';
 
-import { useAppDispatch } from '../redux/store';
+import { clsx } from 'clsx';
 
-import { getFilterSelector } from '../redux/filter/selectors';
+import { useAppDispatch } from '../../redux/store';
 
-import { OPTIONS_DATA } from '../utils/utilityData';
+import { getFilterSelector } from '../../redux/filter/selectors';
 
-import { sort } from '../redux/filter/slice';
+import { OPTIONS_DATA } from '../../utils/utilityData';
+
+import { sort } from '../../redux/filter/slice';
+
+import { AiOutlineSortAscending } from 'react-icons/ai';
+
+import styles from './Sort.module.scss';
 
 const Sort: FC = memo(() => {
   const [categoryId, setCategoryId] = useState(0);
@@ -46,7 +52,7 @@ const Sort: FC = memo(() => {
     () =>
       OPTIONS_DATA.map((option, index) => (
         <li
-          className={`${categoryId === index ? 'active' : ''}`}
+          className={clsx(categoryId === index && `${styles.activePopupItem}`)}
           onClick={optionClickHandler.bind(null, index)}
           key={index}
         >
@@ -59,25 +65,14 @@ const Sort: FC = memo(() => {
   useClickOutside(popupRef, closePopup);
 
   return (
-    <div className="sort">
-      <div className="sort__label">
-        <svg
-          width="10"
-          height="6"
-          viewBox="0 0 10 6"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M10 5C10 5.16927 9.93815 5.31576 9.81445 5.43945C9.69075 5.56315 9.54427 5.625 9.375 5.625H0.625C0.455729 5.625 0.309245 5.56315 0.185547 5.43945C0.061849 5.31576 0 5.16927 0 5C0 4.83073 0.061849 4.68424 0.185547 4.56055L4.56055 0.185547C4.68424 0.061849 4.83073 0 5 0C5.16927 0 5.31576 0.061849 5.43945 0.185547L9.81445 4.56055C9.93815 4.68424 10 4.83073 10 5Z"
-            fill="#2C2C2C"
-          />
-        </svg>
+    <div className={styles.sort}>
+      <div className={styles.sortLabel}>
+        <AiOutlineSortAscending size={20} />
         <b>Сортувати за:</b>
         <span onClick={() => setIsPopupOpened(true)}>{name}</span>
       </div>
       {isPopupOpened && (
-        <div className="sort__popup" ref={popupRef}>
+        <div className={styles.sortPopup} ref={popupRef}>
           <ul>{options}</ul>
         </div>
       )}

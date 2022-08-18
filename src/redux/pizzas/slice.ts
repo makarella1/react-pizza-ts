@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 import { fetchData } from '../../services/pizzasService';
-import { RootState } from '../store';
 
 import { setTotalPages } from '../filter/slice';
 

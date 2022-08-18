@@ -1,0 +1,33 @@
+.items {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+  &-error {
+    max-width: 500px;
+    margin: 100px auto;
+    width: 100%;
+
+    text-align: center;
+
+    h2 {
+      font-size: 40px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.error {
+  max-width: 500px;
+  margin: 100px auto;
+  width: 100%;
+
+  text-align: center;
+
+  h2 {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+}

@@ -3,15 +3,17 @@ import { useSearchParams } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
-import { PizzaItem, PizzasSkeleton } from './index';
+import { PizzaItem, PizzasSkeleton } from '../index';
 
-import { setFilters } from '../redux/filter/slice';
-import { getFilterSelector } from '../redux/filter/selectors';
-import { getPizzasSelector } from '../redux/pizzas/selectors';
+import { setFilters } from '../../redux/filter/slice';
+import { getFilterSelector } from '../../redux/filter/selectors';
+import { getPizzasSelector } from '../../redux/pizzas/selectors';
 
-import { fetchPizzas } from '../redux/pizzas/slice';
+import { fetchPizzas } from '../../redux/pizzas/slice';
 
-import { useAppDispatch } from '../redux/store';
+import { useAppDispatch } from '../../redux/store';
+
+import styles from './PizzaList.module.scss';
 
 const LIMIT = 4;
 
@@ -100,9 +102,9 @@ const PizzaList: FC = memo(() => {
   ));
 
   return (
-    <div className="content__items">
+    <div className={styles.items}>
       {isError && (
-        <div className="content__items-error">
+        <div className={styles.error}>
           <h2>Упс... виникла помилка :(</h2>
           <p>Спробуйте завітати трохи пізніше, піца вже буде чекати на вас!</p>
         </div>

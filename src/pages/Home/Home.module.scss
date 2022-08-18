@@ -1,0 +1,17 @@
+.homeWrapper {
+  padding: 40px 0;
+}
+
+.homeTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (max-width: 1200px) {
+    flex-direction: column;
+  }
+}
+
+.homeTitle {
+  margin: 35px 0;
+}

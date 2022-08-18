@@ -6,6 +6,8 @@ import { useAppDispatch } from '../../redux/store';
 import { setPage } from '../../redux/filter/slice';
 import { getFilterSelector } from '../../redux/filter/selectors';
 
+import { Button } from '../index';
+
 import styles from './Pagination.module.scss';
 
 const Pagination: FC = memo(() => {
@@ -29,17 +31,15 @@ const Pagination: FC = memo(() => {
   return (
     <div className={styles.pagination}>
       {[...Array(totalPages)].map((_, index) => (
-        <button
-          className={
-            activePage === index
-              ? `${styles.button} ${styles.buttonActive}`
-              : `${styles.button}`
-          }
+        <Button
           onClick={changePageHandler.bind(null, index)}
           key={index}
+          isOutline={true}
+          isCircle={true}
+          {...{ isActive: activePage === index }}
         >
           {index + 1}
-        </button>
+        </Button>
       ))}
     </div>
   );

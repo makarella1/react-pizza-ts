@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 
+import { Button } from '../../components';
+
 import { fetchPizzaById } from '../../redux/pizza/slice';
 import { getPizzaSelector } from '../../redux/pizza/selectors';
 
@@ -36,8 +38,10 @@ const Pizza: FC = () => {
           <h2 className={styles.pizzaTitle}>{item.name}</h2>
           <h4 className={styles.pizzaPrice}>{item.price} ₴</h4>
           <p className={styles.pizzaDescription}>{item.description}</p>
-          <Link className="button button--outline button--add" to="/">
-            <span>На головну</span>
+          <Link to="/">
+            <Button isOutline={true} isAdd={true}>
+              На головну
+            </Button>
           </Link>
         </div>
       </div>

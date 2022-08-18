@@ -1,0 +1,128 @@
+@import '../../scss/variables';
+@import '../../scss/libs/normalize';
+
+.cartEmpty {
+  margin: 0 auto;
+  max-width: 560px;
+  width: 100%;
+  text-align: center;
+
+  h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 18px;
+    line-height: 145.4%;
+    letter-spacing: 0.01em;
+    color: #777777;
+  }
+
+  icon {
+    position: relative;
+    top: 2px;
+  }
+
+  img {
+    display: block;
+    width: 300px;
+    margin: 45px auto 60px;
+  }
+}
+
+.cartEmptyButton {
+  padding: 12px 0 14px;
+  width: 230px;
+  margin: 0 auto;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.cartTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cartTitle {
+  display: flex;
+  align-items: center;
+  font-size: 32px;
+
+  svg {
+    position: relative;
+    top: -2px;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    path {
+      stroke: $black;
+      stroke-width: 1.9;
+    }
+  }
+}
+
+.cartClear {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  @include noselect();
+
+  span {
+    display: inline-block;
+    margin-left: 7px;
+    color: #b6b6b6;
+    font-size: 18px;
+  }
+
+  svg {
+    fill: #b6b6b6;
+  }
+
+  span {
+    transition: color $duration ease-in-out;
+  }
+
+  svg {
+    transition: fill $duration ease-in-out;
+  }
+
+  &:hover {
+    svg {
+      fill: darken($color: #b6b6b6, $amount: 50);
+    }
+    span {
+      color: darken($color: #b6b6b6, $amount: 50);
+    }
+  }
+}
+
+.cartItems {
+  display: block;
+}
+
+.cartBottom {
+  margin: 50px 0;
+}
+
+.cartDetails {
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    font-size: 22px;
+
+    &:last-of-type {
+      b {
+        color: $orange;
+      }
+    }
+  }
+}
+
+.cartButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
