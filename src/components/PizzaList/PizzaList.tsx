@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
-import { PizzaItem, PizzasSkeleton } from '../index';
+import { PizzaItem, PizzaSkeleton } from '../index';
 
 import { setFilters } from '../../redux/filter/slice';
 import { getFilterSelector } from '../../redux/filter/selectors';
@@ -38,13 +38,32 @@ const PizzaList: FC = memo(() => {
 
   const options = useMemo(
     () => ({
-      currentPage: currentPage.toString(), //Just so setSearchParams won't be yelling at me for non-strings in search params
+      currentPage: currentPage.toString(), //Just so setSearchParams won't be yelling at me for non-strings
       category: category.toString(),
       sort,
       limit: LIMIT,
     }),
     [category, sort, currentPage]
   );
+
+  useEffect(() => {
+    if (window.location.search) {
+      dispatch(
+        setFilters({
+          categoryId: searchParams.get('category') ?? 0,
+          currentPage: searchParams.get('currentPage') ?? 1,
+          sort: searchParams.get('sort') ?? 'rating',
+        })
+      );
+
+      if (categoryId === 0 && sort === 'rating' && currentPage === 1) {
+        hasQueries.current = false;
+      } else {
+        hasQueries.current = true;
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (isMounted.current) {
@@ -57,22 +76,6 @@ const PizzaList: FC = memo(() => {
 
     isMounted.current = true;
   }, [options, setSearchParams]);
-
-  useEffect(() => {
-    if (window.location.search) {
-      dispatch(
-        setFilters({
-          categoryId: searchParams.get('category') ?? 0,
-          currentPage: searchParams.get('currentPage') ?? 1,
-          sort: searchParams.get('sort') ?? 'price',
-        })
-      );
-
-      hasQueries.current = true;
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,7 +101,7 @@ const PizzaList: FC = memo(() => {
   );
 
   const skeletons = [...Array(LIMIT)].map((_, index) => (
-    <PizzasSkeleton key={index} />
+    <PizzaSkeleton key={index} />
   ));
 
   return (

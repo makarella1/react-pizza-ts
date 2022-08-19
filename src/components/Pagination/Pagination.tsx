@@ -14,7 +14,7 @@ const Pagination: FC = memo(() => {
   const [activePage, setActivePage] = useState(0);
 
   const dispatch = useAppDispatch();
-  const { totalPages } = useSelector(getFilterSelector);
+  const { totalPages, currentPage } = useSelector(getFilterSelector);
 
   const changePageHandler = (index: number) => {
     setActivePage(index);
@@ -27,6 +27,10 @@ const Pagination: FC = memo(() => {
       behavior: 'smooth',
     });
   }, [activePage]);
+
+  useEffect(() => {
+    setActivePage(currentPage - 1);
+  }, [currentPage]);
 
   return (
     <div className={styles.pagination}>

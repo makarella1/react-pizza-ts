@@ -1,10 +1,10 @@
-import { FC, memo, ReactNode, useMemo } from 'react';
+import { FC, memo, ReactNode, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { clsx } from 'clsx';
 
 import { useAppDispatch } from '../../redux/store';
 
-import { filterByCategory } from '../../redux/filter/slice';
+import { filterByCategory, setPage } from '../../redux/filter/slice';
 import { getFilterSelector } from '../../redux/filter/selectors';
 
 import { CATEGORIES_DATA } from '../../utils/utilityData';
@@ -16,6 +16,14 @@ const Categories: FC = memo(() => {
 
   const { categoryId } = useSelector(getFilterSelector);
 
+  const categoryChangeHandler = useCallback(
+    (index: number) => {
+      dispatch(filterByCategory(index));
+      dispatch(setPage(1));
+    },
+    [dispatch]
+  );
+
   const categories = useMemo<ReactNode>(
     () =>
       CATEGORIES_DATA.map((categorie, index) => (
@@ -24,13 +32,13 @@ const Categories: FC = memo(() => {
             `${styles.listItem}`,
             categoryId === index && `${styles.listItemActive}`
           )}
-          onClick={() => dispatch(filterByCategory(index))}
+          onClick={categoryChangeHandler.bind(null, index)}
           key={index}
         >
           {categorie.name}
         </li>
       )),
-    [categoryId, dispatch]
+    [categoryId, categoryChangeHandler]
   );
 
   return (

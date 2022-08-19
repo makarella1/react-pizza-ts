@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../redux/store';
 
 import { HiMinus, HiPlus } from 'react-icons/hi';
 
-import { addItem, removeItem } from '../../redux/cart/slice';
+import { addItem, removeItem, clearItem } from '../../redux/cart/slice';
 
 import { Button } from '../index';
 
@@ -38,6 +38,10 @@ const CartItem: FC<ICartItem> = ({
     dispatch(removeItem(id));
   };
 
+  const clearItemHandler = () => {
+    dispatch(clearItem(id));
+  };
+
   return (
     <div className={styles.cartItem}>
       <div className={styles.cartItemImg}>
@@ -62,7 +66,12 @@ const CartItem: FC<ICartItem> = ({
         <b>{price} ₴</b>
       </div>
       <div className={styles.cartItemRemove}>
-        <Button isOutline={true} isCircle={true} isRemove={true}>
+        <Button
+          isOutline={true}
+          isCircle={true}
+          isRemove={true}
+          onClick={clearItemHandler}
+        >
           <HiPlus />
         </Button>
       </div>

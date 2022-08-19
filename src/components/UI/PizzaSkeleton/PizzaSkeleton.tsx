@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import ContentLoader from 'react-content-loader';
 
-const PizzasSkeleton: FC = () => {
+const PizzaSkeleton: FC = () => {
   return (
     <ContentLoader
       speed={2}
@@ -21,4 +21,4 @@ const PizzasSkeleton: FC = () => {
   );
 };
 
-export default PizzasSkeleton;
+export default PizzaSkeleton;

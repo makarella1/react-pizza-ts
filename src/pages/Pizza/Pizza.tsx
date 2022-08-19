@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 
-import { Button } from '../../components';
+import { Button, Spinner } from '../../components';
 
 import { fetchPizzaById } from '../../redux/pizza/slice';
 import { getPizzaSelector } from '../../redux/pizza/selectors';
@@ -23,7 +23,7 @@ const Pizza: FC = () => {
   }, [id, dispatch]);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Spinner />;
   }
 
   return (
